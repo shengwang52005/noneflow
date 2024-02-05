@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/lang/zh-CN/
 ### Added
 
 - 使用 Pydantic 2.0
+- 商店测试同时输出一份格式化后的 json 文件
 
 ## [3.2.4] - 2024-02-04
 

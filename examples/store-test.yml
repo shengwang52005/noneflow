@@ -70,16 +70,18 @@ jobs:
         if: ${{ contains(fromJSON('["Bot", "Adapter"]'), github.event.client_payload.type) }}
         run: poetry run python -m src.utils.store_test -l 0
 
+      - name: Pretty print results
+        run: |
+          for file in plugin_test/*.json; do
+            poetry run python -m json.tool --no-ensure-ascii $file > $(basename "$file" .json).pretty.json
+          done
+
       - name: Upload results
         uses: actions/upload-artifact@v3
         with:
           name: results
           path: |
-            ${{ github.workspace }}/plugin_test/results.json
-            ${{ github.workspace }}/plugin_test/adapters.json
-            ${{ github.workspace }}/plugin_test/bots.json
-            ${{ github.workspace }}/plugin_test/drivers.json
-            ${{ github.workspace }}/plugin_test/plugins.json
+            ${{ github.workspace }}/plugin_test/*.json
 
   upload_results:
     runs-on: ubuntu-latest
